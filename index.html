@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ball Tan</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="border">
+        <div class="ball"></div>
+    </div>
+
+    <script>
+        let ball = document.querySelector('.ball');
+        let border = document.querySelector('.border');
+        const borderWidth = border.clientWidth;
+        const borderHeight = border.clientHeight;
+
+        let movePx = ball.clientWidth;
+        let derectWidth = 1,
+            derectTop = 1;
+        let moveYRate = calNewMoveYRate()
+        let moveY = 0
+        setInterval(() => {
+            if (ball.offsetLeft == borderWidth - movePx) {
+                derectWidth = -1;
+                moveYRate = calNewMoveYRate()
+            }
+            if (ball.offsetLeft == 0) {
+                derectWidth = 1;
+                moveYRate = calNewMoveYRate()
+            }
+            if (ball.offsetTop == 0) derectTop = 1;
+            if ((ball.offsetTop + movePx) > (borderHeight - 1)) derectTop = -1;
+
+            let offsetLeft = ball.offsetLeft + movePx * derectWidth;
+            let offsetTop = ball.offsetTop + movePx * moveYRate * derectTop;
+            if (offsetTop > (borderHeight - movePx)) offsetTop = borderHeight - movePx
+            if (offsetTop < 0) offsetTop = 0;
+            ball.style.left = offsetLeft + 'px';
+            ball.style.top = offsetTop + 'px';
+        }, 150)
+
+        function calNewMoveYRate() {
+            return Math.floor(Math.random(10) * 10) / 10
+        }
+    </script>
+</body>
+
+</html>
